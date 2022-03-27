@@ -1,4 +1,4 @@
-package com.bangkit.fundamental.myemptyactivity
+package com.dicoding.picodiploma.mygithubuserapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.bangkit.fundamental.myemptyactivity", appContext.packageName)
+        assertEquals("com.dicoding.picodiploma.mygithubuserapp", appContext.packageName)
     }
 }

@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">MyEmptyActivity</string>
+    <string name="app_name">Github Users App</string>
+    <string name="image_item_photo">Image item photo</string>
+    <string name="more_detail">More Detail</string>
+    <string name="company">Company</string>
+    <string name="location">Location</string>
+    <string name="username">Username</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>
