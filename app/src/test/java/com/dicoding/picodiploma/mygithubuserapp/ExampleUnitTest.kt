@@ -1,4 +1,4 @@
-package com.bangkit.fundamental.myemptyactivity
+package com.dicoding.picodiploma.mygithubuserapp
 
 import org.junit.Test
 
