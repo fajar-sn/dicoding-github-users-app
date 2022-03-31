@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mygithubuserapp.model.SearchResponse
 import com.dicoding.picodiploma.mygithubuserapp.model.User
-import com.dicoding.picodiploma.mygithubuserapp.view.ListUserFragment
+import com.dicoding.picodiploma.mygithubuserapp.view.base.ListUserFragment
 
 class HomeFragment : ListUserFragment() {
     private lateinit var listUser: List<User>
@@ -26,11 +26,5 @@ class HomeFragment : ListUserFragment() {
         listUser = requireArguments().getParcelable<SearchResponse>(EXTRA_LIST_USER)?.users ?: listOf()
         showLoading(isLoading)
         setUserData(listUser)
-
-    }
-
-    companion object {
-        const val EXTRA_LIST_USER = "extra_list_user"
-        const val EXTRA_IS_LOADING = "extra_is_loading"
     }
 }

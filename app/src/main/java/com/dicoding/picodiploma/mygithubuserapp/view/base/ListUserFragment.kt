@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.mygithubuserapp.view
+package com.dicoding.picodiploma.mygithubuserapp.view.base
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -15,14 +15,13 @@ import com.dicoding.picodiploma.mygithubuserapp.view.adapter.ListUserAdapter
 import com.dicoding.picodiploma.mygithubuserapp.view.profile.ProfileActivity
 
 open class ListUserFragment : Fragment() {
-    private var _binding: FragmentListUserBinding? = null
-    protected val binding get() = _binding!!
+    protected lateinit var binding: FragmentListUserBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentListUserBinding.inflate(inflater, container, false)
+        binding = FragmentListUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -31,19 +30,16 @@ open class ListUserFragment : Fragment() {
         binding.recyclerViewListUser.setHasFixedSize(true)
 
         if (requireActivity().applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.recyclerViewListUser.layoutManager = object : GridLayoutManager(requireActivity(), 2) {
-                override fun canScrollVertically() = false
-            }
+            binding.recyclerViewListUser.layoutManager =
+                object : GridLayoutManager(requireActivity(), 2) {
+                    override fun canScrollVertically() = false
+                }
         } else {
-            binding.recyclerViewListUser.layoutManager = object : LinearLayoutManager(requireActivity()) {
-                override fun canScrollVertically() = false
-            }
+            binding.recyclerViewListUser.layoutManager =
+                object : LinearLayoutManager(requireActivity()) {
+                    override fun canScrollVertically() = false
+                }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     protected fun showLoading(isLoading: Boolean) {
@@ -54,11 +50,8 @@ open class ListUserFragment : Fragment() {
         val listUserAdapter = ListUserAdapter(users)
         binding.recyclerViewListUser.adapter = listUserAdapter
 
-        listUserAdapter.setOnItemClickCallback(object :
-            ListUserAdapter.OnItemClickCallBack {
-            override fun onItemClicked(data: User) {
-                openUserDetailPage(data)
-            }
+        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallBack {
+            override fun onItemClicked(data: User) = openUserDetailPage(data)
         })
     }
 
@@ -70,5 +63,7 @@ open class ListUserFragment : Fragment() {
 
     companion object {
         const val EXTRA_USER = "extra_user"
+        const val EXTRA_LIST_USER = "extra_list_user"
+        const val EXTRA_IS_LOADING = "extra_is_loading"
     }
 }

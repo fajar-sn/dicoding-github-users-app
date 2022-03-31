@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.dicoding.picodiploma.mygithubuserapp.model.User
-import com.dicoding.picodiploma.mygithubuserapp.view.ListUserFragment
+import com.dicoding.picodiploma.mygithubuserapp.view.base.ListUserFragment
 import com.dicoding.picodiploma.mygithubuserapp.viewModel.FollowersViewModel
 import com.dicoding.picodiploma.mygithubuserapp.viewModel.FollowingViewModel
 
