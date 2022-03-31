@@ -1,8 +1,7 @@
-package com.dicoding.picodiploma.mygithubuserapp.util
+package com.dicoding.picodiploma.mygithubuserapp.helper
 
 open class Event<out T>(private val content: T) {
-    var hasBeenHandled = false
-        private set
+    private var hasBeenHandled = false
 
     fun getContentIfNotHandled(): T? {
         if (hasBeenHandled) return null

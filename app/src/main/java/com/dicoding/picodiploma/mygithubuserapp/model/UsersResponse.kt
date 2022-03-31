@@ -155,6 +155,8 @@ data class User(
 
     @field:SerializedName("email")
     @ColumnInfo(name = "email")
-    val email: String?
+    val email: String?,
+
+    var isFavorite: Boolean = false
 
 ) : Parcelable

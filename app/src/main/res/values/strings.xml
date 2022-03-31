@@ -7,4 +7,7 @@
     <string name="username">Username</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="favorite">Favorite</string>
+    <string name="insert_to_favorite">Added to favorite</string>
+    <string name="delete_from_favorite">Removed from favorite</string>
 </resources>

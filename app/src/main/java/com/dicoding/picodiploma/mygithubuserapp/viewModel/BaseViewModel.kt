@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.picodiploma.mygithubuserapp.repository.ApiConfig
-import com.dicoding.picodiploma.mygithubuserapp.util.Event
+import com.dicoding.picodiploma.mygithubuserapp.repository.remote.ApiConfig
+import com.dicoding.picodiploma.mygithubuserapp.helper.Event
 
 open class BaseViewModel : ViewModel(){
     protected val service = ApiConfig.getApiService()

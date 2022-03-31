@@ -1,8 +1,8 @@
-package com.dicoding.picodiploma.mygithubuserapp.repository
+package com.dicoding.picodiploma.mygithubuserapp.repository.local
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.dicoding.picodiploma.mygithubuserapp.dao.UserDao
+import com.dicoding.picodiploma.mygithubuserapp.database.UserDao
 import com.dicoding.picodiploma.mygithubuserapp.database.UserRoomDatabase
 import com.dicoding.picodiploma.mygithubuserapp.model.User
 import java.util.concurrent.ExecutorService
@@ -17,11 +17,13 @@ class UserLocalRepository(application: Application) {
         userDao = db.getUserDao()
     }
 
-//    fun getAllUsers(): LiveData<List<User>> = userDao.getAllUsers()
+    fun getAllUsers(): LiveData<List<User>> = userDao.getAllUsers()
+
+    fun checkIsFavorite(id: Int) = userDao.checkIsFavorite(id)
 
     fun insert(user: User) = executorService.execute { userDao.insert(user) }
 
     fun delete(user: User) = executorService.execute { userDao.delete(user) }
 
-    fun update(user: User) = executorService.execute { userDao.delete(user) }
+//    fun textCheckIsFavorite(id: Int) = userDao.testCheckIsFavorite(id)
 }

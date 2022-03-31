@@ -1,33 +1,89 @@
 package com.dicoding.picodiploma.mygithubuserapp.view.profile
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.mygithubuserapp.R
-import com.dicoding.picodiploma.mygithubuserapp.databinding.ActivityDetailPageBinding
+import com.dicoding.picodiploma.mygithubuserapp.databinding.ActivityProfileBinding
+import com.dicoding.picodiploma.mygithubuserapp.helper.Event
+import com.dicoding.picodiploma.mygithubuserapp.helper.ViewModelFactory
 import com.dicoding.picodiploma.mygithubuserapp.model.User
-import com.dicoding.picodiploma.mygithubuserapp.view.BaseActivity
 import com.dicoding.picodiploma.mygithubuserapp.view.adapter.SectionPagerAdapter
+import com.dicoding.picodiploma.mygithubuserapp.view.base.BaseActivity
 import com.dicoding.picodiploma.mygithubuserapp.viewModel.ProfileViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ProfileActivity : BaseActivity() {
-    private lateinit var binding: ActivityDetailPageBinding
-    private val viewModel by viewModels<ProfileViewModel>()
+    private lateinit var viewModel: ProfileViewModel
+
+    private lateinit var binding: ActivityProfileBinding
+
+    private var isFavorite: Boolean = false
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailPageBinding.inflate(layoutInflater)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val user = intent.getParcelableExtra<User>(EXTRA_USER) as User
-        viewModel.user.value = user
-        viewModel.getUserDetail()
-        viewModel.user.observe(this) { setUserData(it) }
+        this.user = user
+        viewModel = obtainViewModel(this)
+        viewModel.userLiveData.observe(this) { setUserData(it) }
         viewModel.isLoading.observe(this) { showLoading(it) }
         viewModel.snackBarText.observe(this) { showSnackBar(it) }
         attachTabLayout(user)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_profile, menu)
+        val favoriteButton = menu.findItem(R.id.item_favorite)
+        viewModel.isFavorite.observe(this) { isFavorite ->
+            this.isFavorite = isFavorite
+
+            if (isFavorite) {
+                favoriteButton.icon = AppCompatResources.getDrawable(this,
+                    R.drawable.ic_baseline_favorite_filled_24)
+            } else {
+                favoriteButton.icon = AppCompatResources.getDrawable(this,
+                    R.drawable.ic_baseline_favorite_not_filled_24)
+            }
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_favorite -> {
+                if (isFavorite) {
+                    item.icon = AppCompatResources.getDrawable(this,
+                        R.drawable.ic_baseline_favorite_not_filled_24)
+
+                    viewModel.deleteFromFavorite()
+                    val event = Event(getString(R.string.delete_from_favorite))
+                    showSnackBar(event)
+                } else {
+                    item.icon = AppCompatResources.getDrawable(this,
+                        R.drawable.ic_baseline_favorite_filled_24)
+                    viewModel.insertToFavorite()
+                    val event = Event(getString(R.string.insert_to_favorite))
+                    showSnackBar(event)
+                }
+
+                true
+            }
+            else -> true
+        }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): ProfileViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application, user)
+        return ViewModelProvider(activity, factory)[ProfileViewModel::class.java]
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -36,7 +92,7 @@ class ProfileActivity : BaseActivity() {
 
     private fun setUserData(user: User) {
         supportActionBar?.title = user.name
-        Glide.with(this).load(user.avatarUrl).into(binding.imageViewUser)
+        binding.imageViewUser.let { Glide.with(this).load(user.avatarUrl).into(it) }
 
         binding.textViewFollowersFollowing.text =
             StringBuilder("${user.followers} Followers & ${user.following} Following")
@@ -53,9 +109,11 @@ class ProfileActivity : BaseActivity() {
         val viewPager = binding.viewPager
         viewPager.adapter = sectionPagerAdapter
 
-        TabLayoutMediator(binding.tabLayoutDetail, viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
-        }.attach()
+        binding.tabLayoutDetail.let {
+            TabLayoutMediator(it, viewPager) { tab, position ->
+                tab.text = resources.getString(TAB_TITLES[position])
+            }.attach()
+        }
     }
 
     companion object {

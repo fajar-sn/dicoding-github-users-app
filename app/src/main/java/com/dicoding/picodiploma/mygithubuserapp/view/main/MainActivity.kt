@@ -11,7 +11,8 @@ import com.dicoding.picodiploma.mygithubuserapp.R
 import com.dicoding.picodiploma.mygithubuserapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mygithubuserapp.model.SearchResponse
 import com.dicoding.picodiploma.mygithubuserapp.model.User
-import com.dicoding.picodiploma.mygithubuserapp.view.BaseActivity
+import com.dicoding.picodiploma.mygithubuserapp.view.base.BaseActivity
+import com.dicoding.picodiploma.mygithubuserapp.view.base.ListUserFragment
 import com.dicoding.picodiploma.mygithubuserapp.viewModel.HomeViewModel
 
 class MainActivity : BaseActivity() {
@@ -61,19 +62,21 @@ class MainActivity : BaseActivity() {
 
     private fun commitFragment(listUser: List<User>, isLoading: Boolean) {
         val bundle = Bundle()
-        bundle.putBoolean(HomeFragment.EXTRA_IS_LOADING, isLoading)
-        bundle.putParcelable(HomeFragment.EXTRA_LIST_USER, SearchResponse(null, null, listUser))
+        bundle.putBoolean(ListUserFragment.EXTRA_IS_LOADING, isLoading)
+        bundle.putParcelable(ListUserFragment.EXTRA_LIST_USER, SearchResponse(null, null, listUser))
         val mainFragment = HomeFragment()
         mainFragment.arguments = bundle
         val fragment = supportFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)
 
         if (!supportFragmentManager.fragments.contains(fragment)) {
             supportFragmentManager.commit {
-                add(R.id.frame_container, mainFragment, HomeFragment::class.java.simpleName)
+                add(R.id.frame_layout_home, mainFragment, HomeFragment::class.java.simpleName)
             }
         } else {
             supportFragmentManager.commit {
-                replace(R.id.frame_container, mainFragment, HomeFragment::class.java.simpleName)
+                replace(R.id.frame_layout_home,
+                    mainFragment,
+                    HomeFragment::class.java.simpleName)
             }
         }
     }
