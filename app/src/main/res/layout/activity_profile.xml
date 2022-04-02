@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_user"
@@ -67,6 +67,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/text_view_name"
@@ -79,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:lineSpacingMultiplier="1"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -117,7 +118,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_more_detail"
                 app:tabIndicatorColor="?attr/colorOnPrimary"
-                app:tabTextColor="@android:color/white" />
+                app:tabTextColor="?attr/colorOnPrimary" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"

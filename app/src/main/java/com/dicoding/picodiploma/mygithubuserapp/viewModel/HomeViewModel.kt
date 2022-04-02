@@ -1,16 +1,20 @@
 package com.dicoding.picodiploma.mygithubuserapp.viewModel
 
+import androidx.lifecycle.asLiveData
+import com.dicoding.picodiploma.mygithubuserapp.database.SettingsPreferences
 import com.dicoding.picodiploma.mygithubuserapp.model.SearchResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ListUserViewModel() {
+class HomeViewModel(private val preferences: SettingsPreferences) : ListUserViewModel() {
 
     init {
         tag = "MainViewModel"
         getListUser()
     }
+
+    fun getThemeSettings() = preferences.getThemeSettings().asLiveData()
 
     private fun getListUser() = super.getListUser { service.getUsers() }
 
