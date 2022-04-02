@@ -5,14 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.mygithubuserapp.R
 import com.dicoding.picodiploma.mygithubuserapp.databinding.ActivityProfileBinding
+import com.dicoding.picodiploma.mygithubuserapp.helper.ActivityHelper
 import com.dicoding.picodiploma.mygithubuserapp.helper.Event
-import com.dicoding.picodiploma.mygithubuserapp.helper.ViewModelFactory
 import com.dicoding.picodiploma.mygithubuserapp.model.User
 import com.dicoding.picodiploma.mygithubuserapp.view.adapter.SectionPagerAdapter
 import com.dicoding.picodiploma.mygithubuserapp.view.base.BaseActivity
@@ -33,7 +31,7 @@ class ProfileActivity : BaseActivity() {
         setContentView(binding.root)
         val user = intent.getParcelableExtra<User>(EXTRA_USER) as User
         this.user = user
-        viewModel = obtainViewModel(this)
+        viewModel = ActivityHelper.obtainViewModel(this, user)
         viewModel.userLiveData.observe(this) { setUserData(it) }
         viewModel.isLoading.observe(this) { showLoading(it) }
         viewModel.snackBarText.observe(this) { showSnackBar(it) }
@@ -79,11 +77,6 @@ class ProfileActivity : BaseActivity() {
             }
             else -> true
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): ProfileViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application, user)
-        return ViewModelProvider(activity, factory)[ProfileViewModel::class.java]
     }
 
     private fun showLoading(isLoading: Boolean) {
