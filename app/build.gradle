@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "GITHUB_API_TOKEN", '"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"')
+        buildConfigField("String", "GITHUB_API_TOKEN", '"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"')
     }
 
     buildTypes {
@@ -35,13 +35,6 @@ android {
     }
     buildFeatures {
         viewBinding true
-    }
-    sourceSets {
-        main {
-            res {
-                srcDirs 'src/main/res', 'src/main/res/layouts', 'src/main/res/layouts/home', 'src/main/res/layouts/profile', 'src/main/res/layouts/component'
-            }
-        }
     }
 }
 

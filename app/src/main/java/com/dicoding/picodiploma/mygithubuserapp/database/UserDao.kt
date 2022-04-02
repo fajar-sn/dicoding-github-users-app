@@ -14,12 +14,8 @@ interface UserDao {
     fun delete(user: User)
 
     @Query("SELECT * FROM user ORDER BY id ASC")
-    fun getAllUsers(): LiveData<List<User>>
+    fun getAllUsers(): Flow<List<User>>
 
     @Query("SELECT * FROM user WHERE id = :id LIMIT 1")
     fun checkIsFavorite(id: Int): Flow<User>
-//    fun checkIsFavorite(id: Int): LiveData<User>
-
-//    @Query("SELECT * FROM user WHERE id = :id LIMIT 1")
-//    fun testCheckIsFavorite(id: Int): Flow<User>
 }

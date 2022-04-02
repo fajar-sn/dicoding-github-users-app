@@ -17,13 +17,11 @@ class UserLocalRepository(application: Application) {
         userDao = db.getUserDao()
     }
 
-    fun getAllUsers(): LiveData<List<User>> = userDao.getAllUsers()
+    fun getAllUsers() = userDao.getAllUsers()
 
     fun checkIsFavorite(id: Int) = userDao.checkIsFavorite(id)
 
     fun insert(user: User) = executorService.execute { userDao.insert(user) }
 
     fun delete(user: User) = executorService.execute { userDao.delete(user) }
-
-//    fun textCheckIsFavorite(id: Int) = userDao.testCheckIsFavorite(id)
 }
